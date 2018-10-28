@@ -1,0 +1,21 @@
+extends layout/template.pug
+
+block body
+  .container
+    a.btn.btn-primary(href="/") back
+    h2 title
+    input.form-control#title
+    h2 text
+    textarea.form-control#text
+    .btn.btn-success(onclick=`
+      (async function() {
+        try {
+          await newTopic($('#title').val(),$('#text').val())
+          alert("สร้างได้แล้วโว้ยยย")
+          window.location = "/"
+        } catch(e) {
+          alert("Error หวะ")
+          console.log(e)
+        }
+      })();
+    `) New topic

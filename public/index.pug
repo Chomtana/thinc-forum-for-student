@@ -4,8 +4,9 @@ block body
   div dakjsdlasldkjaskl
   pre#xxx xxx
   #vue-wrap.container
+    a.btn.btn-success(href="/new") New topic
     div(v-for="post,id in window.data")
-      a.card(:href="'/topic?id='+id"): .card-body
+      a.card(:href="'/topic?id='+id").mb-2: .card-body
         .row
           .col-12
             h5.card-title {{ post.topic }}

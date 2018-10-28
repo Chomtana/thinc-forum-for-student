@@ -33,6 +33,19 @@ async function getAllTopicData() {
   return res;
 }
 
+//new topic
+async function newTopic(title,text) {
+  await db.collection("topic").add({
+    "topic": title,
+    "comment": [],
+    "content": {
+      "like": 0,
+      text: text,
+      owner: 1
+    }
+  });
+}
+
 var data;
 
 async function getAllComment() {

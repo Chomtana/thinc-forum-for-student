@@ -1,0 +1,14 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script><script src="https://code.jquery.com/jquery-3.3.1.js"></script><script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"><script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><script src="/js/lib.js"></script></head><body><div class="container"><a class="btn btn-primary" href="/">back</a><h2>title</h2><input class="form-control" id="title"><h2>text</h2><textarea class="form-control" id="text"></textarea><div class="btn btn-success" onclick="
+      (async function() {
+        try {
+          await newTopic($('#title').val(),$('#text').val())
+          alert(&quot;สร้างได้แล้วโว้ยยย&quot;)
+          window.location = &quot;/&quot;
+        } catch(e) {
+          alert(&quot;Error หวะ&quot;)
+          console.log(e)
+        }
+      })();
+    ">New topic</div></div></body></html>
