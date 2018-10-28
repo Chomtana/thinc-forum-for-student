@@ -46,10 +46,32 @@ async function newTopic(title,text) {
   });
 }
 
+//like topic
+async function likeTopic(id) {
+  data[id].content.like++;
+  await db.collection("topic").doc(id).set(data[id]);
+}
+
+//like comment
+async function likeComment(id,commentid) {
+  data[id].comment[commentid].like++;
+  await db.collection("topic").doc(id).set(data[id]);
+}
+
+//new comment
+async function newComment(id,text) {
+  data[id].comment.push({
+    owner: 1,
+    text: text,
+    like: 0
+  });
+  await db.collection("topic").doc(id).set(data[id]);
+}
+
 var data;
 
-async function getAllComment() {
-  return;
+async function getAllComment(id) {
+  return data[id].comment;
 }
 
 //int main()

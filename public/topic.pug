@@ -6,28 +6,68 @@ block body
   #vue-wrap.container
     a.btn.btn-primary(href="/") back
     .row.mb-2
-      .card: .card-body
+      .card.w-100: .card-body
         .row
           .col-12
             h5.card-title {{ post.topic }}
             p.card-text {{ post.content.text }}
             p.card-text {{ post.content.like }} Like
+            .btn.btn-success(onclick=`
+              (async function() {
+                try {
+                  await likeTopic(topicid);
+                  alert("like เรียบร้อย")
+                } catch(e) {
+                  alert("Error หวะ")
+                  console.log(e)
+                }
+              })();
+            `) Like
     .pl-4
-      .row(v-for="comment in post.comment").mb-2
-        .card: .card-body
+      .row(v-for="comment,commentid in post.comment").mb-2
+        .card.w-100: .card-body
           .row
             .col-12
               p.card-text {{ comment.text }}
               p.card-text {{ comment.like }} Like
+              .btn.btn-success(v-on:click="likeComment(commentid)") Like
+      .row
+        textarea#new-comment.form-control
+        .btn.btn-success(onclick=`
+          (async function() {
+            try {
+              await newComment(topicid,$('#new-comment').val());
+              alert("new comment เรียบร้อย")
+            } catch(e) {
+              alert("Error หวะ")
+              console.log(e)
+            }
+          })();
+        `) new comment
   script.
+    var topicid = urlparam('id');
+
     function main() {
       $("#xxx").text(JSON.stringify(data,null,4));
 
-      var app = new Vue({
+      window.vm = new Vue({
         el: '#vue-wrap',
         data: {
           window: window,
-          post: window.data[urlparam('id')]
+          post: window.data[topicid],
+          alert: alert,
+          console: console
+        },
+        methods: {
+          likeComment: async function(commentid) {
+            try {
+              await window.likeComment(window.topicid,commentid);
+              alert("like เรียบร้อย")
+            } catch(e) {
+              alert("Error หวะ")
+              console.log(e)
+            }
+          }
         }
       })
     }
