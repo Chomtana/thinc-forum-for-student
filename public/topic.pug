@@ -4,13 +4,21 @@ block body
   div dakjsdlasldkjaskl
   pre#xxx xxx
   #vue-wrap.container
-    div(v-for="post,id in window.data")
-      a.card(:href="'/topic?id='+id"): .card-body
+    a.btn.btn-primary(href="/") back
+    .row.mb-2
+      .card: .card-body
         .row
           .col-12
             h5.card-title {{ post.topic }}
             p.card-text {{ post.content.text }}
             p.card-text {{ post.content.like }} Like
+    .pl-4
+      .row(v-for="comment in post.comment").mb-2
+        .card: .card-body
+          .row
+            .col-12
+              p.card-text {{ comment.text }}
+              p.card-text {{ comment.like }} Like
   script.
     function main() {
       $("#xxx").text(JSON.stringify(data,null,4));
@@ -18,7 +26,8 @@ block body
       var app = new Vue({
         el: '#vue-wrap',
         data: {
-          window: window
+          window: window,
+          post: window.data[urlparam('id')]
         }
       })
     }

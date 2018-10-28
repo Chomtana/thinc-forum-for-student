@@ -12,6 +12,12 @@ firebase.initializeApp(config);
 // Initialize Cloud Firestore through Firebase
 var db = firebase.firestore();
 
+function urlparam(param) {
+  var url = new URL(window.location);
+  var c = url.searchParams.get(param);
+  return c;
+}
+
 // Disable deprecated features
 db.settings({
   timestampsInSnapshots: true
