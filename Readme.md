@@ -1,4 +1,4 @@
-รู้สึกมันจะต้อง npm instal สองที่ (มั้ง)
+รู้สึกมันจะต้อง npm install สองที่ (มั้ง)
 1. root folder -> พวก complier
 2. functions folder -> พวก cloud functions
 
