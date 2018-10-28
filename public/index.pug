@@ -1,0 +1,23 @@
+extends layout/template.pug
+
+block body
+  div dakjsdlasldkjaskl
+  pre#xxx xxx
+  #vue-wrap.container
+    div(v-for="post,key in window.data")
+      .card: .card-body
+        .row
+          .col-12
+            h5.card-title {{ post.topic }}
+            p.card-text {{ post.content.text }}
+  script.
+    function main() {
+      $("#xxx").text(JSON.stringify(data,null,4));
+
+      var app = new Vue({
+        el: '#vue-wrap',
+        data: {
+          window: window
+        }
+      })
+    }

@@ -1,0 +1,17 @@
+{
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "build": "gulp compile",
+    "watch": "gulp compile:watch",
+    "watch_sass": "gulp sass:watch"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-sass": "^4.0.1",
+    "plugin-error": "^1.0.1",
+    "pug": "^2.0.3"
+  },
+  "private": true
+}
