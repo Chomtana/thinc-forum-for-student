@@ -14,9 +14,9 @@ block body
             p.card-text {{ post.content.like }} Like
   script.
     function main() {
-      $("#xxx").text(JSON.stringify(data,null,4));
+      //$("#xxx").text(JSON.stringify(data,null,4));
 
-      var app = new Vue({
+      window.vm = new Vue({
         el: '#vue-wrap',
         data: {
           window: window

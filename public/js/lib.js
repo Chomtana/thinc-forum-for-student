@@ -39,15 +39,19 @@ async function getAllTopicData() {
 
 //new topic
 async function newTopic(title,text) {
-  await db.collection("topic").add({
-    "topic": title,
-    "comment": [],
-    "content": {
-      "like": 0,
-      text: text,
-      owner: 1
-    }
-  });
+  if (auth_uid) {
+    await db.collection("topic").add({
+      "topic": title,
+      "comment": [],
+      "content": {
+        "like": 0,
+        text: text,
+        owner: auth_uid
+      }
+    });
+  } else {
+    throw "Need to login";
+  }
 }
 
 //like topic
@@ -64,12 +68,16 @@ async function likeComment(id,commentid) {
 
 //new comment
 async function newComment(id,text) {
-  data[id].comment.push({
-    owner: 1,
-    text: text,
-    like: 0
-  });
-  await db.collection("topic").doc(id).set(data[id]);
+  if (auth_uid) {
+    data[id].comment.push({
+      owner: auth_uid,
+      text: text,
+      like: 0
+    });
+    await db.collection("topic").doc(id).set(data[id]);
+  } else {
+    throw "Need to login";
+  }
 }
 
 async function getAllComment(id) {
@@ -93,6 +101,15 @@ async function getAllComment(id) {
   });
   
   firebase.auth().onAuthStateChanged(async function(user) {
+    window.vm_auth = new Vue({
+      el: '#user-inf',
+      data: {
+        window: window
+      }
+    })
+    
+    if (window.main) main();
+    
     if (user) {
       var email = user.email;
       var uid = user.uid;
@@ -104,14 +121,12 @@ async function getAllComment(id) {
       $("#uid").text(uid);
       $("#firebaseui-auth-container").hide();
 
-      if (vm) vm.$forceUpdate();
-
-      await main();
+      
 
       //await init_countamount();
 
       loading = false;
-      if (vm) vm.$forceUpdate();
+      if (window.vm) vm.$forceUpdate();
     }
   });
 })();

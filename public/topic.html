@@ -1,7 +1,7 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-firestore.js"></script><script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-auth.js"></script><script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
-<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" /><script src="https://code.jquery.com/jquery-3.3.1.js"></script><script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"><script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><script src="/js/lib.js"></script></head><body><script></script><div id="firebaseui-auth-container"></div><div>dakjsdlasldkjaskl</div><pre id="xxx">xxx</pre><div class="container" id="vue-wrap"><a class="btn btn-primary" href="/">back</a><div class="row mb-2"><div class="card w-100"><div class="card-body"><div class="row"><div class="col-12"><h5 class="card-title">{{ post.topic }}</h5><p class="card-text">{{ post.content.text }}</p><p class="card-text">{{ post.content.like }} Like</p><div class="btn btn-success" onclick="
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" /><script src="https://code.jquery.com/jquery-3.3.1.js"></script><script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"><script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><script src="/js/lib.js"></script></head><body><div id="firebaseui-auth-container"></div><div class="d-flex justify-content-between" id="user-inf"><div><b>Login :</b><span id="email">{{window.auth_email}}</span><i v-if="isadmin">(Admin)</i></div><button class="btn btn-danger" onclick="      firebase.auth().signOut().then(function(){      window.location.reload();      }).catch(function(err){      alert('Logout error '+JSON.stringify(err));      console.log('Logout error', err);      });">Logout</button></div><div>dakjsdlasldkjaskl</div><pre id="xxx">xxx</pre><div class="container" id="vue-wrap"><a class="btn btn-primary" href="/">back</a><div class="row mb-2"><div class="card w-100"><div class="card-body"><div class="row"><div class="col-12"><h5 class="card-title">{{ post.topic }}</h5><p class="card-text">{{ post.content.text }}</p><p class="card-text">{{ post.content.like }} Like</p><div class="btn btn-success" onclick="
               (async function() {
                 try {
                   await likeTopic(topicid);
@@ -16,6 +16,7 @@
             try {
               await newComment(topicid,$('#new-comment').val());
               alert(&quot;new comment เรียบร้อย&quot;)
+              window.reload()
             } catch(e) {
               alert(&quot;Error หวะ&quot;)
               console.log(e)
@@ -24,7 +25,7 @@
         ">new comment</div></div></div></div><script>var topicid = urlparam('id');
 
 function main() {
-  $("#xxx").text(JSON.stringify(data,null,4));
+  //$("#xxx").text(JSON.stringify(data,null,4));
 
   window.vm = new Vue({
     el: '#vue-wrap',
