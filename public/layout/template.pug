@@ -5,9 +5,12 @@ html
 
     meta(charset="utf-8")
 
-    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-firestore.js"></script>
+    script(src="https://www.gstatic.com/firebasejs/5.5.5/firebase-auth.js")
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
 
     script(src="https://code.jquery.com/jquery-3.3.1.js")
 
@@ -20,4 +23,7 @@ html
 
     block after_script
   body
+    script.
+    #firebaseui-auth-container
     block body
+		

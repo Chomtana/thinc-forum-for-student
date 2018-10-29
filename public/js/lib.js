@@ -12,6 +12,10 @@ firebase.initializeApp(config);
 // Initialize Cloud Firestore through Firebase
 var db = firebase.firestore();
 
+var data;
+var auth_email,auth_uid;
+var isadmin = false;
+
 function urlparam(param) {
   var url = new URL(window.location);
   var c = url.searchParams.get(param);
@@ -68,8 +72,6 @@ async function newComment(id,text) {
   await db.collection("topic").doc(id).set(data[id]);
 }
 
-var data;
-
 async function getAllComment(id) {
   return data[id].comment;
 }
@@ -79,5 +81,37 @@ async function getAllComment(id) {
   //cache all data in a variable, so it easy to use
   data = await getAllTopicData();
 
-  main();
+  //init auth
+  var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+  ui.start('#firebaseui-auth-container', {
+    signInOptions : [
+      // List of OAuth providers supported.
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    ]
+    // Other config options...
+  });
+  
+  firebase.auth().onAuthStateChanged(async function(user) {
+    if (user) {
+      var email = user.email;
+      var uid = user.uid;
+
+      auth_email = email;
+      auth_uid = uid;
+    
+      $("#email").text(email);
+      $("#uid").text(uid);
+      $("#firebaseui-auth-container").hide();
+
+      if (vm) vm.$forceUpdate();
+
+      await main();
+
+      //await init_countamount();
+
+      loading = false;
+      if (vm) vm.$forceUpdate();
+    }
+  });
 })();
