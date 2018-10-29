@@ -10,9 +10,9 @@ block body
     .btn.btn-success(onclick=`
       (async function() {
         try {
-          await newTopic($('#title').val(),$('#text').val())
+          await newTopic($('#title').val(),$('#text').val(),urlparam('room'))
           alert("สร้างได้แล้วโว้ยยย")
-          window.location = "/"
+          window.location = "/room?room="+urlparam('room')
         } catch(e) {
           alert("Error หวะ")
           console.log(e)

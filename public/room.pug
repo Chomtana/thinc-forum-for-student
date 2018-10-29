@@ -1,0 +1,27 @@
+extends layout/template.pug
+
+block body
+  div dakjsdlasldkjaskl
+  pre#xxx xxx
+  #vue-wrap.container
+    a.btn.btn-success(:href="'/new?room='+window.roomid") New topic
+    div(v-for="post,id in window.topic_by_room[window.roomid]")
+      a.card(:href="'/topic?id='+id+'&room='+window.roomid").mb-2: .card-body
+        .row
+          .col-12
+            h5.card-title {{ post.topic }}
+            p.card-text {{ post.content.text }}
+            p.card-text {{ post.content.like }} Like
+  script.
+    var roomid = urlparam('room');
+
+    function main() {
+      //$("#xxx").text(JSON.stringify(data,null,4));
+
+      window.vm = new Vue({
+        el: '#vue-wrap',
+        data: {
+          window: window
+        }
+      })
+    }

@@ -12,9 +12,10 @@ firebase.initializeApp(config);
 // Initialize Cloud Firestore through Firebase
 var db = firebase.firestore();
 
-var data;
+var data,rooms=[];
 var auth_email,auth_uid;
 var isadmin = false;
+var topic_by_room = {};
 
 function urlparam(param) {
   var url = new URL(window.location);
@@ -33,12 +34,13 @@ async function getAllTopicData() {
   var res = {};
   querySnapshot.forEach(function(doc) {
     res[doc.id] = doc.data()
+    res[doc.id]['id'] = doc.id;
   })
   return res;
 }
 
 //new topic
-async function newTopic(title,text) {
+async function newTopic(title,text,roomid) {
   if (auth_uid) {
     await db.collection("topic").add({
       "topic": title,
@@ -47,7 +49,8 @@ async function newTopic(title,text) {
         "like": 0,
         text: text,
         owner: auth_uid
-      }
+      },
+      room:roomid
     });
   } else {
     throw "Need to login";
@@ -88,6 +91,18 @@ async function getAllComment(id) {
 (async function() {
   //cache all data in a variable, so it easy to use
   data = await getAllTopicData();
+
+  for(x in data) {
+    if (data[x].room) {
+      rooms.push(data[x].room);
+      if (!topic_by_room[data[x].room]) topic_by_room[data[x].room] = {}
+      topic_by_room[data[x].room][data[x].id] = data[x]
+    } else {
+      if (!topic_by_room["null"]) topic_by_room["null"] = {}
+      topic_by_room["null"][data[x].id] = data[x]
+    }
+    rooms = $.unique(rooms);
+  }
 
   //init auth
   var ui = new firebaseui.auth.AuthUI(firebase.auth());
