@@ -16,6 +16,8 @@ var data,rooms=[];
 var auth_email,auth_uid;
 var isadmin = false;
 var topic_by_room = {};
+var hottopics = [];
+var dataarr = [];
 
 function urlparam(param) {
   var url = new URL(window.location);
@@ -93,6 +95,7 @@ async function getAllComment(id) {
   data = await getAllTopicData();
 
   for(x in data) {
+    dataarr.push(data[x]);
     if (data[x].room) {
       rooms.push(data[x].room);
       if (!topic_by_room[data[x].room]) topic_by_room[data[x].room] = {}
@@ -103,6 +106,12 @@ async function getAllComment(id) {
     }
     rooms = $.unique(rooms);
   }
+  
+  hottopics = dataarr.slice();
+  hottopics.sort((a,b)=>{
+    return b.content.like-a.content.like;
+  })
+  hottopics = hottopics.slice(0,10);
 
   //init auth
   var ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -117,13 +126,11 @@ async function getAllComment(id) {
   
   firebase.auth().onAuthStateChanged(async function(user) {
     window.vm_auth = new Vue({
-      el: '#user-inf',
+      el: '#user-vue',
       data: {
         window: window
       }
     })
-    
-    if (window.main) main();
     
     if (user) {
       var email = user.email;
@@ -135,6 +142,8 @@ async function getAllComment(id) {
       $("#email").text(email);
       $("#uid").text(uid);
       $("#firebaseui-auth-container").hide();
+      
+      vm_auth.$forceUpdate();
 
       
 
@@ -143,5 +152,7 @@ async function getAllComment(id) {
       loading = false;
       if (window.vm) vm.$forceUpdate();
     }
+    
+    if (window.main) main();
   });
 })();

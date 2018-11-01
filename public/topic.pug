@@ -1,10 +1,8 @@
 extends layout/template.pug
 
 block body
-  div dakjsdlasldkjaskl
-  pre#xxx xxx
   #vue-wrap.container
-    a.btn.btn-primary(href="/") back
+    a.btn.btn-primary(:href="'/room?room='+window.roomid") back
     .row.mb-2
       .card.w-100: .card-body
         .row
@@ -38,7 +36,6 @@ block body
             try {
               await newComment(topicid,$('#new-comment').val());
               alert("new comment เรียบร้อย")
-              window.reload()
             } catch(e) {
               alert("Error หวะ")
               console.log(e)
@@ -47,6 +44,7 @@ block body
         `) new comment
   script.
     var topicid = urlparam('id');
+    var roomid = urlparam('room');
 
     function main() {
       //$("#xxx").text(JSON.stringify(data,null,4));

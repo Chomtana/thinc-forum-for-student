@@ -1,10 +1,10 @@
 extends layout/template.pug
 
 block body
-  div dakjsdlasldkjaskl
-  pre#xxx xxx
   #vue-wrap.container
     a.btn.btn-success(:href="'/new?room='+window.roomid") New topic
+    a.btn.btn-primary(:href="'/'") Back
+    h2 Room: {{window.roomid}}
     div(v-for="post,id in window.topic_by_room[window.roomid]")
       a.card(:href="'/topic?id='+id+'&room='+window.roomid").mb-2: .card-body
         .row
